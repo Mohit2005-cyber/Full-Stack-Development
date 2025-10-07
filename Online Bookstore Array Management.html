@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Online Book Store - Array Methods</title>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+    padding: 30px;
+    color: #2c3e50;
+  }
+
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 32px;
+    text-shadow: 1px 1px 2px #bdc3c7;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    transition: 0.3s ease;
+  }
+
+  .container:hover {
+    transform: scale(1.01);
+  }
+
+  .counter {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #34495e;
+    border-left: 5px solid #3498db;
+    padding-left: 10px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+  }
+
+  li {
+    background: #ecf0f1;
+    margin: 8px 0;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 18px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-transform: capitalize;
+  }
+
+
+  .add { background: #27ae60; }
+  .add:hover { background: #1e8449; }
+
+  .unshift { background: #16a085; }
+  .unshift:hover { background: #117864; }
+
+  .delete { background: #e74c3c; }
+  .delete:hover { background: #c0392b; }
+
+  .shift { background: #d35400; }
+  .shift:hover { background: #a04000; }
+
+  .splice { background: #34495e; }
+  .splice:hover { background: #2c3e50; }
+
+  .merge { background: #f39c12; }
+  .merge:hover { background: #d68910; }
+
+  .copy { background: #3498db; }
+  .copy:hover { background: #2980b9; }
+
+  .flat { background: #7f8c8d; }
+  .flat:hover { background: #626e70; }
+
+  .slice { background: #8e44ad; }
+  .slice:hover { background: #6c3483; }
+
+  .string { background: #1abc9c; }
+  .string:hover { background: #16a085; }
+
+  .length { background: #2c3e50; }
+  .length:hover { background: #1a252f; }
+
+  .update { background: #9b59b6; }
+  .update:hover { background: #7d3c98; }
+
+  .foreach { background: #95a5a6; }
+  .foreach:hover { background: #7f8c8d; }
+
+  @media (max-width: 600px) {
+    .buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+</style>
+
+</head>
+<body>
+  <h1> Online Bookstore Array Management</h1>
+  <div class="container">
+    <div class="counter">Total Books: <span id="bookCount">0</span></div>
+    <ul id="bookList"></ul>
+
+    <div class="buttons">
+      <button class="add" onclick="addBook()">Add (push)</button>
+      <button class="unshift" onclick="unshiftBook()">Add (unshift)</button>
+      <button class="delete" onclick="removeLast()">Remove Last (pop)</button>
+      <button class="shift" onclick="removeFirst()">Remove First (shift)</button>
+      <button class="splice" onclick="deleteBySplice()">Delete by Index (splice)</button>
+      <button class="merge" onclick="mergeBooks()">Merge (concat)</button>
+      <button class="copy" onclick="copyWithinBooks()">CopyWithin()</button>
+      <button class="flat" onclick="flattenCategories()">Flatten (flat)</button>
+      <button class="slice" onclick="sliceBooks()">Slice()</button>
+      <button class="string" onclick="displayAsString()">toString() & join()</button>
+      <button class="length" onclick="showLength()">Show Total (length)</button>
+      <button class="update" onclick="updateBook()">Update by Index</button>
+      <button class="foreach" onclick="displayWithPositions()">forEach()</button>
+    </div>
+  </div>
+
+  <script>
+    let books = ["Math", "Science", "English"];
+
+    function renderBooks(list = books) {
+      const ul = document.getElementById("bookList");
+      ul.innerHTML = "";
+      list.forEach((book, index) => {
+        ul.innerHTML += `<li>${index + 1}. ${book}</li>`;
+      });
+      document.getElementById("bookCount").innerText = books.length;
+    }
+
+    function addBook() {
+      const book = prompt("Enter book name to push:");
+      if (book) {
+        books.push(book);
+        renderBooks();
+      }
+    }
+
+    function unshiftBook() {
+      const book = prompt("Enter book name to unshift:");
+      if (book) {
+        books.unshift(book);
+        renderBooks();
+      }
+    }
+
+    function removeLast() {
+      books.pop();
+      renderBooks();
+    }
+
+    function removeFirst() {
+      books.shift();
+      renderBooks();
+    }
+
+    function deleteBySplice() {
+      const index = parseInt(prompt("Enter index to delete (starting from 0):"));
+      if (!isNaN(index) && index >= 0 && index < books.length) {
+        books.splice(index, 1);
+        renderBooks();
+      } else {
+        alert("Invalid index");
+      }
+    }
+
+    function mergeBooks() {
+      const newArrivals = ["History", "Geography"];
+      books = books.concat(newArrivals);
+      renderBooks();
+    }
+
+    function copyWithinBooks() {
+      books.copyWithin(1, 0, 2);
+      renderBooks();
+    }
+
+    function flattenCategories() {
+      let nestedBooks = [["Art", "Design"], ["Programming"]];
+      let flatBooks = nestedBooks.flat();
+      books = books.concat(flatBooks);
+      renderBooks();
+    }
+
+    function sliceBooks() {
+      let part = books.slice(0, 3);
+      alert("Sliced Books: " + part.join(", "));
+    }
+
+    function displayAsString() {
+      alert("toString(): " + books.toString() + "\njoin(' | '): " + books.join(" | "));
+    }
+
+    function showLength() {
+      alert("Total number of books: " + books.length);
+    }
+
+    function updateBook() {
+      const index = parseInt(prompt("Enter index to update:"));
+      if (!isNaN(index) && index >= 0 && index < books.length) {
+        const newBook = prompt("Enter new book name:");
+        if (newBook) {
+          books[index] = newBook;
+          renderBooks();
+        }
+      } else {
+        alert("Invalid index");
+      }
+    }
+
+    function displayWithPositions() {
+      let result = "";
+      books.forEach((book, index) => {
+        result += `${index + 1}: ${book}\n`;
+      });
+      alert(result);
+    }
+
+z
+    renderBooks();
+  </script>
+</body>
+</html>

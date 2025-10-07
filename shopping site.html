@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>shopping Carts</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color:#2874f0;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      background-color: #2874f0; /* Flipkart blue */
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+    }
+
+    /* Logo */
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    /* Search box */
+    .search-container {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      margin: 0 20px;
+    }
+
+    .search-container input {
+      flex: 1;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 2px 0 0 2px;
+      outline: none;
+    }
+
+    .search-container button {
+      background-color: #ff9f00; /* Orange button */
+      border: none;
+      padding: 8px 16px;
+      border-radius: 0 2px 2px 0;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+    }
+
+    /* Cart button */
+    #cart-btn {
+      background-color: #ff9f00;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+    }
+
+    .search-container button:hover,
+    .cart-btn:hover {
+      background-color: #f68b00;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ff9f00;
+      font-weight: bolder;
+    }
+
+    .product-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    #product {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    #product img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    #product-title {
+      font-size: 18px;
+      margin: 10px 0;
+      font-weight: bold;
+    }
+
+    #price {
+      font-size: 16px;
+      color: #2874f0;
+      margin-bottom: 12px;
+    }
+
+    button {
+      background: #dfca09;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0a63d8;
+    }
+
+    #cart {
+      margin-top: 20px;
+      padding: 15px;
+      border: 2px solid #333;
+      border-radius: 8px;
+      background: #fff;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Flipkart</div>
+    <div class="search-container">
+      <input type="text" placeholder="Search for products, brands and more">
+      <button>search</button>
+    </div>
+    <button id="cart-btn">🛒 Cart</button>
+  </nav>
+  <h1>Shopping Carts</h1>
+
+  <div class="product-container">
+
+    <div id="product">
+      <img src="https://th.bing.com/th/id/OIP.hcsFT5cyQiAMWM3K_zLt6QHaEK?w=290&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3" alt="speaker">
+      <div id="product-title">Speaker</div>
+      <div id="price">₹1,000</div>
+      <button onclick= "addToSpeaker('Speaker',1000)"> Add to Cart </button>
+      <button onclick= "removeFromSpeaker('Speaker',1000)"> Remove </button>
+    </div>
+
+    <div id="product">
+      <img src="https://static.digit.in/Apple-iPhone-17-Pro-Max-.png" alt="mobile">
+      <div id="product-title">Mobile</div>
+      <div id="price">₹9,499</div>
+      <button onclick="addToMobile('Mobile',9499)">Add to Cart</button>
+      <button onclick="removeFromMobile('Mobile',9499)">Remove</button>
+    </div>
+
+    <div id="product">
+      <img src="https://th.bing.com/th/id/OIP.Ada9UJPTsbnUy5Y7-ifo2AHaEx?w=303&h=195&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3" alt="laptop">
+      <div id="product-title">Laptop</div>
+      <div id="price">₹40,000</div>
+      <button onclick="addToLaptop('Laptop',40000)">Add to Cart</button>
+      <button onclick="removeFromLaptop('Laptop',40000)">Remove</button>
+    </div>
+
+    <div id="product">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6520/6520149_sd.jpg" alt="headphone">
+      <div id="product-title">Headphone</div>
+      <div id="price">₹1,299</div>
+      <button onclick="addToHeadphone('Headphone',1299)">Add to Cart</button>
+      <button onclick="removeFromHeadphone('Headphone',1299)">Remove</button>
+    </div>
+
+    <div id="cart">
+    <h3>Cart</h3>
+    <div id="cart-items"></div>
+    <p><strong>Total Items:</strong> <span id="total-items"></span></p>
+    <p><strong>Total Price:</strong> $<span id="total-price">0</span></p>
+  </div>
+
+<script>
+  let speaker = 0; mobile = 0; laptop = 0; headphone = 0;
+  let totalItems = 0;
+  let totalPrice = 0;
+
+    function addToSpeaker(product,price) {
+      speaker++;
+      totalPrice += price;
+      totalItems += 1;
+
+      updateCart();
+    }
+
+    function removeFromSpeaker(product, price) {
+      if (speaker > 0) {  
+        speaker--;
+        totalPrice -= price;
+        totalItems -= 1;
+        updateCart();
+      }
+    }
+
+    function addToMobile(product, price) {
+      mobile++;
+      totalPrice += price;
+      totalItems += 1;
+
+      updateCart();
+    }
+
+    function removeFromMobile(product, price) {
+      if (mobile > 0) {  
+        mobile--;
+        totalPrice -= price;
+        totalItems -= 1;
+        updateCart();
+      }
+    }
+
+    function addToLaptop(product, price) {
+      laptop++;
+      totalPrice += price;
+      totalItems += 1;
+
+      updateCart();
+    }
+
+    function removeFromLaptop(product, price) {
+      if (laptop > 0) {  
+        laptop--;
+        totalPrice -= price;
+        totalItems -= 1;
+
+        updateCart();
+      }
+    }
+
+    function addToHeadphone(product, price) {
+      headphone++;
+      totalPrice += price;
+      totalItems += 1;
+
+      updateCart();
+    }
+
+    function removeFromHeadphone(product, price) {
+      if (headphone > 0) {  
+        headphone--;
+        totalPrice -= price;
+        totalItems -= 1;
+
+        updateCart();
+      }
+    }
+
+    function updateCart() {
+      document.getElementById("total-items").innerText = totalItems;
+      document.getElementById("total-price").innerText = totalPrice;
+    }
+</script>
+  </div>
+</body>
+</html>

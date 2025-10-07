@@ -1,0 +1,102 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #fff;
+  padding: 10px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.logo {
+  border: 1px solid black;
+  padding: 5px 10px;
+}
+
+.search-box {
+  flex: 1;
+  margin: 0 10px;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.cart-icon {
+  border: 1px solid black;
+  padding: 5px 10px;
+}
+
+/* Main Layout */
+.main-container {
+  display: flex;
+  margin-top: 15px;
+}
+
+/* Products */
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  flex: 2;
+}
+
+.product {
+  border: 2px solid black;
+  padding: 10px;
+  text-align: center;
+}
+
+.product-img {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 5px 10px;
+  margin-top: 5px;
+  border: 1px solid black;
+  background: none;
+  cursor: pointer;
+}
+
+/* Cart */
+.cart {
+  border: 2px solid black;
+  padding: 10px;
+  margin-left: 15px;
+  flex: 1;
+}
+
+.cart h2 {
+  margin-bottom: 10px;
+}
+
+.cart p {
+  margin: 5px 0;
+}
+
+.checkout-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  background: none;
+  cursor: pointer;
+}
+
+/* Footer */
+.footer {
+  margin-top: 20px;
+  text-align: center;
+}

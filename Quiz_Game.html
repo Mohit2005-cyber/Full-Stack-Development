@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Quiz Game</title>
+  <style>
+   
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  overflow: hidden;
+}
+
+.quiz-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  width: 500px;
+  padding: 35px;
+  border-radius: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.quiz-container::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 250px;
+  height: 250px;
+  background: linear-gradient(135deg, #ff4e50, #f9d423);
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.7;
+  animation: float 6s infinite alternate;
+}
+
+.quiz-container::after {
+  content: '';
+  position: absolute;
+  bottom: -100px;
+  left: -100px;
+  width: 250px;
+  height: 250px;
+  background: linear-gradient(135deg, #24c6dc, #514a9d);
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.7;
+  animation: float 8s infinite alternate-reverse;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) translateX(0); }
+  100% { transform: translateY(20px) translateX(20px); }
+}
+
+h2 {
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-size: 22px;
+  text-shadow: 0 3px 10px rgba(0,0,0,0.4);
+}
+
+.progress, .timer {
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #f1f1f1;
+  font-size: 15px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.option {
+  padding: 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(90deg, #4776E6, #8E54E9);
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.option:hover {
+  transform: translateY(-3px) scale(1.03);
+  background: linear-gradient(90deg, #43cea2, #185a9d);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+/* Answer feedback colors */
+.correct { 
+  background: linear-gradient(90deg, #11998e, #38ef7d) !important; 
+  box-shadow: 0 6px 20px rgba(56,239,125,0.6); 
+}
+
+.wrong { 
+  background: linear-gradient(90deg, #ff416c, #ff4b2b) !important; 
+  box-shadow: 0 6px 20px rgba(255,75,43,0.6); 
+}
+
+.unanswered { 
+  background: linear-gradient(90deg, #bdc3c7, #2c3e50) !important; 
+  box-shadow: 0 6px 20px rgba(44,62,80,0.5); 
+}
+
+.result {
+  font-size: 18px;
+  margin-top: 25px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);
+}
+
+#startBtn {
+  margin-top: 20px;
+  padding: 12px 28px;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(90deg, #f7971e, #ffd200);
+  color: #111;
+  font-size: 16px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+}
+
+#startBtn:hover {
+  transform: translateY(-3px) scale(1.05);
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  color: #fff;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2 id="question">Welcome to Web Quiz</h2>
+    <div class="progress" id="progress"></div>
+    <div class="timer" id="timer"></div>
+    <div class="options" id="options"></div>
+    <button id="startBtn">Start Quiz</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+      { q: "Which tag is used for a paragraph in HTML?", options: ["<p>", "<h1>", "<div>", "<span>"], answer: "<p>" },
+      { q: "Which property is used to change text color in CSS?", options: ["color", "font-color", "text-color", "background-color"], answer: "color" },
+      { q: "Which HTML attribute is used to link an external CSS file?", options: ["href", "src", "link", "style"], answer: "href" },
+      { q: "How do you write a comment in JavaScript?", options: ["<!-- Comment -->", "// Comment", "/* Comment */", "# Comment"], answer: "// Comment" },
+      { q: "Which method adds an element at the end of an array in JavaScript?", options: ["push()", "pop()", "shift()", "unshift()"], answer: "push()" }
+    ];
+
+    let current = 0, score = 0, correct = 0, wrong = 0, unanswered = 0;
+    let timer, timeLeft;
+
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+    const timerEl = document.getElementById("timer");
+    const resultEl = document.getElementById("result");
+    const progressEl = document.getElementById("progress");
+    const startBtn = document.getElementById("startBtn");
+
+    startBtn.addEventListener("click", startQuiz);
+
+    function startQuiz() {
+      current = 0; score = 0; correct = 0; wrong = 0; unanswered = 0;
+      resultEl.textContent = "";
+      startBtn.style.display = "none";
+      shuffleArray(questions);
+      showQuestion();
+    }
+
+    function showQuestion() {
+      if (current >= questions.length) {
+        endQuiz();
+        return;
+      }
+
+      let q = questions[current];
+      questionEl.textContent = q.q;
+      progressEl.textContent = "Question " + (current+1) + " of " + questions.length;
+
+      optionsEl.innerHTML = "";
+      let opts = [...q.options];
+      shuffleArray(opts);
+
+      opts.forEach(opt => {
+        let btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.classList.add("option");
+        btn.onclick = () => checkAnswer(opt, q.answer, btn);
+        optionsEl.appendChild(btn);
+      });
+
+      timeLeft = 10;
+      timerEl.textContent = "Time Left: " + timeLeft + "s";
+      clearInterval(timer);
+      timer = setInterval(() => {
+        timeLeft--;
+        timerEl.textContent = "Time Left: " + timeLeft + "s";
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          unanswered++;
+          showFeedback(q.answer);
+        }
+      }, 1000);
+    }
+
+    function checkAnswer(selected, correctAns, btn) {
+      clearInterval(timer);
+      if (selected === correctAns) {
+        score++; correct++;
+        btn.classList.add("correct");
+      } else {
+        wrong++;
+        btn.classList.add("wrong");
+        highlightCorrect(correctAns);
+      }
+      disableOptions();
+      setTimeout(() => { current++; showQuestion(); }, 2000);
+    }
+
+    function showFeedback(correctAns) {
+      disableOptions();
+      highlightCorrect(correctAns);
+      Array.from(optionsEl.children).forEach(o => {
+        if (!o.classList.contains("correct")) o.classList.add("unanswered");
+      });
+      setTimeout(() => { current++; showQuestion(); }, 2000);
+    }
+
+    function disableOptions() {
+      Array.from(optionsEl.children).forEach(o => o.disabled = true);
+    }
+
+    function highlightCorrect(correctAns) {
+      Array.from(optionsEl.children).forEach(o => {
+        if (o.textContent === correctAns) o.classList.add("correct");
+      });
+    }
+
+    function endQuiz() {
+      questionEl.textContent = "Quiz Finished!";
+      progressEl.textContent = "";
+      timerEl.textContent = "";
+      optionsEl.innerHTML = "";
+      resultEl.innerHTML = 
+        "Score: " + score + "<br>" +
+        "Correct: " + correct + "<br>" +
+        "Wrong: " + wrong + "<br>" +
+        "Unanswered: " + unanswered;
+      startBtn.textContent = "Restart Quiz";
+      startBtn.style.display = "inline-block";
+    }
+
+    function shuffleArray(arr) {    
+      
+      for (let i = arr.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    }
+  </script>
+</body>
+</html>

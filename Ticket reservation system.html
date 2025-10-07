@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Train Reservation System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 25px;
+    }
+    .section {
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      max-width: 750px;
+      color: #fff;
+    }
+    .section:nth-child(2) { background: #42a5f5; }
+    .section:nth-child(3) { background: #66bb6a; }
+    .section:nth-child(4) { background: #ffca28; }
+    .section:nth-child(5) { background: #ab47bc; }
+    .section:nth-child(6) { background: #ef5350; }
+    .section:nth-child(7) { background: #26c6da; }
+    .section:nth-child(8) { background: #ec407a; }
+    .section:nth-child(9) { background: #ffa726; }
+    .section:nth-child(10){ background: #9ccc65; }
+
+    .output {
+      background: rgba(255,255,255,0.2);
+      padding: 10px;
+      border-radius: 8px;
+      white-space: pre-line;
+      font-family: monospace;
+      font-size: 15px;
+      margin-top: 10px;
+      min-height: 40px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.3);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: rgba(255,255,255,0.6);
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <h1> Train Reservation System</h1>
+
+  <div class="section"><h2>1. Passenger List</h2><button onclick="showPassengers()">Show</button><div id="passengerList" class="output"></div></div>
+  <div class="section"><h2>2. Senior Citizens</h2><button onclick="showSeniors()">Show</button><div id="seniors" class="output"></div></div>
+  <div class="section"><h2>3. Uppercase Names</h2><button onclick="showUpperNames()">Convert</button><div id="upperNames" class="output"></div></div>
+  <div class="section"><h2>4. Total Age</h2><button onclick="showTotalAge()">Calculate</button><div id="totalAge" class="output"></div></div>
+  <div class="section"><h2>5. Check Adults</h2><button onclick="checkAdults()">Check</button><div id="allAdults" class="output"></div></div>
+  <div class="section"><h2>6. Check Minors</h2><button onclick="checkMinors()">Check</button><div id="hasMinor" class="output"></div></div>
+  <div class="section"><h2>7. Seat Numbers</h2><button onclick="showSeatArray()">Show</button><div id="seatArray" class="output"></div></div>
+
+  <script>
+    var names = ["Aman", "Ravi", "Neha", "Kiran"];
+    var ages = [25, 17, 62, 45];
+    var seats = [12, 13, 14, 15];
+    var genders = ["M", "M", "F", "F"];
+
+    function showPassengers() {
+      var text = "";
+      for (var i = 0; i < names.length; i++) {
+        text += "Passenger: " + names[i] + " | Age: " + ages[i] + " | Seat: " + seats[i] + " | Gender: " + genders[i] + "\n";
+      }
+      document.getElementById("passengerList").textContent = text;
+    }
+
+    function showSeniors() {
+      var text = "";
+      for (var i = 0; i < ages.length; i++) {
+        if (ages[i] >= 60) {
+          text += names[i] + " ";
+        }
+      }
+      if (text === "") {
+        text = "No seniors";
+      }
+      document.getElementById("seniors").textContent = text;
+    }
+
+    function showUpperNames() {
+      var text = "";
+      console.log(text);
+      for (var i = 0; i < names.length; i++) {
+        text += names[i].toUpperCase() + " ";
+      }
+      document.getElementById("upperNames").textContent = text;
+    }
+
+    function showTotalAge() {
+      var sum = 0;
+      for (var i = 0; i < ages.length; i++) {
+        sum += ages[i];
+      }
+      document.getElementById("totalAge").textContent = sum;
+    }
+
+    function checkAdults() {
+      var allAdults = true;
+      for (var i = 0; i < ages.length; i++) {
+        if (ages[i] < 18) {
+          allAdults = false;
+        }
+      }
+      if (allAdults) {
+        document.getElementById("allAdults").textContent = " Yes, all are adults";
+      } else {
+        document.getElementById("allAdults").textContent = " No, some are not adults";
+      }
+    }
+
+    function checkMinors() {
+      var hasMinor = false;
+      for (var i = 0; i < ages.length; i++) {
+        if (ages[i] < 18) {
+          hasMinor = true;
+        }
+      }
+      if (hasMinor) {
+        document.getElementById("hasMinor").textContent = " Yes, at least one minor";
+      } else {
+        document.getElementById("hasMinor").textContent = " No minors present";
+      }
+    }
+
+    function showSeatArray() {
+      var text = "";
+      for (var i = 0; i < seats.length; i++) {
+        text += seats[i] + " ";
+      }
+      document.getElementById("seatArray").textContent = text;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Algo Trading Bot with Rounds</title>
+</head>
+<body>
+  <h1>Algo Trading Bot with Multiple Rounds (Console Output)</h1>
+  <p>Open the browser console to see the trading actions per round.</p>
+
+  <script>
+    let buyingPrice = 100;
+    let currentPrices = [110, 95, 105, 90, 115];
+
+    function tradingBot(buyPrice, currentPrice) {
+      if (currentPrice > buyPrice + 5) {
+        return "SELL";
+      } else if (currentPrice < buyPrice - 5) {
+        return "BUY";
+      } else {
+        return "HOLD";
+      }
+    }
+
+    for (let round = 0; round < currentPrices.length; round++) {
+      let price = currentPrices[round];
+      let action = tradingBot(buyingPrice, price);
+      console.log("Round " + (round + 1) + ": Price = " + price + " → " + action);
+    }
+  </script>
+</body>
+</html>
