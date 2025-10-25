@@ -3,275 +3,296 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>shopping Carts</title>
+  <title>ShopSmart | Cart</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background-color:#2874f0;
+      background: linear-gradient(135deg, #2874f0, #6a11cb);
+      color: #333;
+      min-height: 100vh;
     }
 
-    /* Navbar styling */
+    /* Navbar */
     .navbar {
-      background-color: #2874f0; /* Flipkart blue */
-      color: white;
+      background: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(8px);
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 10px 20px;
+      align-items: center;
+      padding: 15px 40px;
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
     }
 
-    /* Logo */
     .logo {
-      font-size: 24px;
+      font-size: 28px;
       font-weight: bold;
+      letter-spacing: 1px;
+      color: #ffeb3b;
     }
 
-    /* Search box */
+    /* Search */
     .search-container {
       display: flex;
-      align-items: center;
-      flex: 1;
-      margin: 0 20px;
+      width: 45%;
+      max-width: 500px;
     }
 
     .search-container input {
       flex: 1;
-      padding: 8px 12px;
+      padding: 10px;
       border: none;
-      border-radius: 2px 0 0 2px;
+      border-radius: 20px 0 0 20px;
       outline: none;
+      font-size: 14px;
     }
 
     .search-container button {
-      background-color: #ff9f00; /* Orange button */
+      background: #ff9f00;
       border: none;
-      padding: 8px 16px;
-      border-radius: 0 2px 2px 0;
+      padding: 10px 18px;
+      border-radius: 0 20px 20px 0;
       cursor: pointer;
-      color: white;
+      color: #fff;
       font-weight: bold;
+      transition: 0.3s;
     }
 
-    /* Cart button */
+    .search-container button:hover {
+      background: #f57c00;
+    }
+
     #cart-btn {
-      background-color: #ff9f00;
+      background: #ffeb3b;
       border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
       font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      transition: 0.3s;
     }
 
-    .search-container button:hover,
-    .cart-btn:hover {
-      background-color: #f68b00;
+    #cart-btn:hover {
+      background: #fff176;
+      transform: scale(1.05);
     }
 
+    /* Heading */
     h1 {
       text-align: center;
-      margin-bottom: 20px;
-      color: #ff9f00;
-      font-weight: bolder;
+      color: #fff;
+      margin: 30px 0;
+      font-size: 36px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
 
+    /* Product Grid */
     .product-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 25px;
+      padding: 0 50px 40px;
     }
 
-    #product {
-      background: white;
-      border-radius: 8px;
+    .product {
+      background: #fff;
+      border-radius: 15px;
       padding: 15px;
       text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      transition: 0.3s ease-in-out;
     }
 
-    #product img {
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    .product img {
       width: 100%;
       height: 180px;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 10px;
+      margin-bottom: 10px;
     }
 
-    #product-title {
+    .product-title {
+      font-weight: 600;
       font-size: 18px;
-      margin: 10px 0;
-      font-weight: bold;
+      margin: 10px 0 5px;
     }
 
-    #price {
-      font-size: 16px;
+    .price {
       color: #2874f0;
+      font-weight: bold;
       margin-bottom: 12px;
     }
 
-    button {
-      background: #dfca09;
-      color: #fff;
+    .product button {
+      margin: 4px;
       border: none;
-      padding: 8px 12px;
-      border-radius: 5px;
+      padding: 8px 14px;
+      border-radius: 20px;
       cursor: pointer;
-    }
-    button:hover {
-      background: #0a63d8;
+      font-weight: bold;
+      transition: 0.3s;
+      color: #fff;
     }
 
-    #cart {
-      margin-top: 20px;
-      padding: 15px;
-      border: 2px solid #333;
-      border-radius: 8px;
-      background: #fff;
+    .add-btn {
+      background: #28a745;
     }
+    .add-btn:hover {
+      background: #1e7e34;
+    }
+
+    .remove-btn {
+      background: #d32f2f;
+    }
+    .remove-btn:hover {
+      background: #b71c1c;
+    }
+
+    /* Cart Section */
+    #cart {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      width: 90%;
+      max-width: 600px;
+      margin: 40px auto;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    #cart h3 {
+      text-align: center;
+      color: #2874f0;
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
     .cart-item {
       display: flex;
       justify-content: space-between;
-      margin: 5px 0;
+      margin: 6px 0;
+      font-weight: 500;
+    }
+
+    #total {
+      border-top: 2px solid #ddd;
+      margin-top: 15px;
+      padding-top: 10px;
+      text-align: right;
+      font-weight: bold;
+      color: #333;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
   <nav class="navbar">
-    <div class="logo">Flipkart</div>
+    <div class="logo">ShopSmart</div>
     <div class="search-container">
-      <input type="text" placeholder="Search for products, brands and more">
-      <button>search</button>
+      <input type="text" placeholder="Search for products, brands and more...">
+      <button>Search</button>
     </div>
     <button id="cart-btn">🛒 Cart</button>
   </nav>
-  <h1>Shopping Carts</h1>
+
+  <h1>Exclusive Shopping Deals</h1>
 
   <div class="product-container">
 
-    <div id="product">
-      <img src="https://th.bing.com/th/id/OIP.hcsFT5cyQiAMWM3K_zLt6QHaEK?w=290&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3" alt="speaker">
-      <div id="product-title">Speaker</div>
-      <div id="price">₹1,000</div>
-      <button onclick= "addToSpeaker('Speaker',1000)"> Add to Cart </button>
-      <button onclick= "removeFromSpeaker('Speaker',1000)"> Remove </button>
+    <div class="product">
+      <img src="https://th.bing.com/th/id/OIP.hcsFT5cyQiAMWM3K_zLt6QHaEK?w=290&h=180&c=7&r=0&o=7&pid=1.7" alt="Speaker">
+      <div class="product-title">Wireless Speaker</div>
+      <div class="price">₹1,000</div>
+      <button class="add-btn" onclick="addToCart('Speaker', 1000)">Add</button>
+      <button class="remove-btn" onclick="removeFromCart('Speaker', 1000)">Remove</button>
     </div>
 
-    <div id="product">
-      <img src="https://static.digit.in/Apple-iPhone-17-Pro-Max-.png" alt="mobile">
-      <div id="product-title">Mobile</div>
-      <div id="price">₹9,499</div>
-      <button onclick="addToMobile('Mobile',9499)">Add to Cart</button>
-      <button onclick="removeFromMobile('Mobile',9499)">Remove</button>
+    <div class="product">
+      <img src="https://static.digit.in/Apple-iPhone-17-Pro-Max-.png" alt="Mobile">
+      <div class="product-title">iPhone 17 Pro Max</div>
+      <div class="price">₹9,499</div>
+      <button class="add-btn" onclick="addToCart('Mobile', 9499)">Add</button>
+      <button class="remove-btn" onclick="removeFromCart('Mobile', 9499)">Remove</button>
     </div>
 
-    <div id="product">
-      <img src="https://th.bing.com/th/id/OIP.Ada9UJPTsbnUy5Y7-ifo2AHaEx?w=303&h=195&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3" alt="laptop">
-      <div id="product-title">Laptop</div>
-      <div id="price">₹40,000</div>
-      <button onclick="addToLaptop('Laptop',40000)">Add to Cart</button>
-      <button onclick="removeFromLaptop('Laptop',40000)">Remove</button>
+    <div class="product">
+      <img src="https://th.bing.com/th/id/OIP.Ada9UJPTsbnUy5Y7-ifo2AHaEx?w=303&h=195&c=7&r=0&o=7&pid=1.7" alt="Laptop">
+      <div class="product-title">Gaming Laptop</div>
+      <div class="price">₹40,000</div>
+      <button class="add-btn" onclick="addToCart('Laptop', 40000)">Add</button>
+      <button class="remove-btn" onclick="removeFromCart('Laptop', 40000)">Remove</button>
     </div>
 
-    <div id="product">
-      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6520/6520149_sd.jpg" alt="headphone">
-      <div id="product-title">Headphone</div>
-      <div id="price">₹1,299</div>
-      <button onclick="addToHeadphone('Headphone',1299)">Add to Cart</button>
-      <button onclick="removeFromHeadphone('Headphone',1299)">Remove</button>
+    <div class="product">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6520/6520149_sd.jpg" alt="Headphones">
+      <div class="product-title">Noise Cancelling Headphones</div>
+      <div class="price">₹1,299</div>
+      <button class="add-btn" onclick="addToCart('Headphone', 1299)">Add</button>
+      <button class="remove-btn" onclick="removeFromCart('Headphone', 1299)">Remove</button>
     </div>
-
-    <div id="cart">
-    <h3>Cart</h3>
-    <div id="cart-items"></div>
-    <p><strong>Total Items:</strong> <span id="total-items"></span></p>
-    <p><strong>Total Price:</strong> $<span id="total-price">0</span></p>
   </div>
 
-<script>
-  let speaker = 0; mobile = 0; laptop = 0; headphone = 0;
-  let totalItems = 0;
-  let totalPrice = 0;
+  <div id="cart">
+    <h3>Your Cart</h3>
+    <div id="cart-items"></div>
+    <div id="total">
+      <p>Total Items: <span id="total-items">0</span></p>
+      <p>Total Price: ₹<span id="total-price">0</span></p>
+    </div>
+  </div>
 
-    function addToSpeaker(product,price) {
-      speaker++;
+  <script>
+    const cart = {};
+    let totalItems = 0;
+    let totalPrice = 0;
+
+    function addToCart(product, price) {
+      if (!cart[product]) cart[product] = { quantity: 0, price };
+      cart[product].quantity++;
+      totalItems++;
       totalPrice += price;
-      totalItems += 1;
-
       updateCart();
     }
 
-    function removeFromSpeaker(product, price) {
-      if (speaker > 0) {  
-        speaker--;
+    function removeFromCart(product, price) {
+      if (cart[product] && cart[product].quantity > 0) {
+        cart[product].quantity--;
+        totalItems--;
         totalPrice -= price;
-        totalItems -= 1;
-        updateCart();
-      }
-    }
-
-    function addToMobile(product, price) {
-      mobile++;
-      totalPrice += price;
-      totalItems += 1;
-
-      updateCart();
-    }
-
-    function removeFromMobile(product, price) {
-      if (mobile > 0) {  
-        mobile--;
-        totalPrice -= price;
-        totalItems -= 1;
-        updateCart();
-      }
-    }
-
-    function addToLaptop(product, price) {
-      laptop++;
-      totalPrice += price;
-      totalItems += 1;
-
-      updateCart();
-    }
-
-    function removeFromLaptop(product, price) {
-      if (laptop > 0) {  
-        laptop--;
-        totalPrice -= price;
-        totalItems -= 1;
-
-        updateCart();
-      }
-    }
-
-    function addToHeadphone(product, price) {
-      headphone++;
-      totalPrice += price;
-      totalItems += 1;
-
-      updateCart();
-    }
-
-    function removeFromHeadphone(product, price) {
-      if (headphone > 0) {  
-        headphone--;
-        totalPrice -= price;
-        totalItems -= 1;
-
+        if (cart[product].quantity === 0) delete cart[product];
         updateCart();
       }
     }
 
     function updateCart() {
+      const cartContainer = document.getElementById("cart-items");
+      cartContainer.innerHTML = "";
+      for (let item in cart) {
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `${item} (x${cart[item].quantity}) <span>₹${cart[item].quantity * cart[item].price}</span>`;
+        cartContainer.appendChild(div);
+      }
       document.getElementById("total-items").innerText = totalItems;
       document.getElementById("total-price").innerText = totalPrice;
     }
-</script>
-  </div>
+  </script>
 </body>
 </html>

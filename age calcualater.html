@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age Calculator</title>
+  <style>
+    /* ===== General Page Styling ===== */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      color: #fff;
+    }
+
+    /* ===== Main Card Container ===== */
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 40px 50px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ===== Title ===== */
+    h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    /* ===== Input Field ===== */
+    input[type="date"] {
+      padding: 12px 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      outline: none;
+      width: 70%;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.25);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+      cursor: pointer;
+    }
+
+    /* ===== Button Styling ===== */
+    button {
+      margin-top: 20px;
+      background: #fff;
+      color: #2575fc;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #2575fc;
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+
+    /* ===== Output Text ===== */
+    p {
+      margin-top: 25px;
+      font-size: 1.3em;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    /* ===== Subtle Fade Animation ===== */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      animation: fadeIn 1s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Age Calculator</h2>
+    <input type="date" id="dob">
+    <br>
+    <button onclick="
+      var dob = document.getElementById('dob').value;
+      if (!dob) {
+        document.getElementById('out').innerText = 'Please select your date of birth.';
+        return;
+      }
+      var today = new Date();
+      var birthDate = new Date(dob);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      document.getElementById('out').innerText = '🎉 You are ' + age + ' years old!';
+    ">Check Age</button>
+    <p id="out"></p>
+  </div>
+</body>
+</html>

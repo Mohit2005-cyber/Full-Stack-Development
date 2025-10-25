@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Record Processing</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    #results {
+      margin-top: 20px;
+      padding: 12px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      min-height: 120px;
+    }
+    .student {
+      margin: 8px 0;
+      padding: 8px;
+      border-radius: 4px;
+    }
+    .pass {
+      background: #e0f7e9;
+      border-left: 5px solid green;
+    }
+    .fail {
+      background: #fdecea;
+      border-left: 5px solid red;
+    }
+    .error {
+      color: #b91c1c;
+      font-weight: bold;
+      background: #fff0f0;
+      padding: 8px;
+      border-radius: 4px;
+      margin: 6px 0;
+    }
+    .log {
+      font-family: monospace;
+      font-size: 13px;
+      color: #444;
+      margin: 6px 0;
+    }
+    #controls { text-align:center; margin-top:12px; }
+    button { padding:8px 12px; margin:0 6px; border-radius:6px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <h1>Student Record Processing</h1>
+
+  <div id="results">
+    <div class="log">Status: Ready</div>
+  </div>
+
+  <div id="controls">
+    <button id="startBtn">Start Processing</button>
+    <button id="resetBtn">Reset</button>
+  </div>
+
+  <script>
+    // Student records (student4 has missing marks to trigger an error)
+    const students = {
+      student1: { name: "Alice", marks: { math: 85, science: 90, english: 78 } },
+      student2: { name: "Bob", marks: { math: 75, science: 80, english: 88 } },
+      student3: { name: "Charlie", marks: { math: 95, science: 89, english: 92 } },
+      student4: { name: "David" } // Missing marks -> will throw
+    };
+
+    const resultsDiv = document.getElementById("results");
+    const startBtn = document.getElementById("startBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    // Simple delay helper to simulate async operation (like DB read)
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // Process one student (simulates async, calculates average)
+    async function processStudent(student) {
+      // log to browser console and on-page
+      console.log("Processing student:", student.name);
+      appendLog(`Processing student: ${student.name} ...`);
+
+      // simulate variable delay (500-1200ms)
+      await delay(Math.floor(Math.random() * 700) + 500);
+
+      if (!student.marks || typeof student.marks !== "object") {
+        // throw an error if marks missing or invalid
+        throw new Error("Marks missing for " + (student.name || "Unknown"));
+      }
+
+      let total = 0, count = 0;
+      // for...in to iterate subjects (object)
+      for (let subject in student.marks) {
+        const val = Number(student.marks[subject]);
+        if (Number.isNaN(val)) {
+          throw new Error(`Non-numeric mark for ${student.name} in ${subject}`);
+        }
+        total += val;
+        count++;
+      }
+      const average = total / count;
+      return {
+        name: student.name,
+        average: Number(average.toFixed(2)),
+        status: average >= 80 ? "Pass" : "Fail"
+      };
+    }
+
+    // Append a small log line to the results box
+    function appendLog(text) {
+      const line = document.createElement("div");
+      line.className = "log";
+      line.textContent = text;
+      resultsDiv.appendChild(line);
+      // keep newest visible
+      resultsDiv.scrollTop = resultsDiv.scrollHeight;
+    }
+
+    // Show a student's result immediately
+    function showStudentResult(r) {
+      const div = document.createElement("div");
+      div.className = "student " + r.status.toLowerCase();
+      div.textContent = `${r.name} has an average of ${r.average.toFixed(2)} → ${r.status}`;
+      resultsDiv.appendChild(div);
+    }
+
+    // Show an error on the page
+    function showError(msg) {
+      const div = document.createElement("div");
+      div.className = "error";
+      div.textContent = "Error: " + msg;
+      resultsDiv.appendChild(div);
+      console.error(msg);
+    }
+
+    // Process all students sequentially using for...in and await
+    async function processAllStudents() {
+      // clear area and disable start to avoid double runs
+      resultsDiv.innerHTML = "";
+      appendLog("Starting processing of students...");
+      startBtn.disabled = true;
+      resetBtn.disabled = true;
+
+      const collected = [];
+
+      // for...in iterates object keys sequentially
+      for (let key in students) {
+        const student = students[key];
+        try {
+          const res = await processStudent(student); // sequential because of await in loop
+          appendLog(`Processed: ${res.name} (avg ${res.average.toFixed(2)})`);
+          // show each result as soon as it's ready
+          showStudentResult(res);
+          collected.push(res);
+        } catch (err) {
+          // handle error, but continue with next student
+          showError(`${student.name || key} - ${err.message}`);
+          collected.push({ name: student.name || key, average: null, status: "Error" });
+        }
+      }
+
+      appendLog("All students processed. Final summary below:");
+      // use for...of to iterate results array (though we've shown each already)
+      for (const r of collected) {
+        if (r.status === "Error") continue; // already shown above
+        // (Optional) could show a condensed summary here; we've already shown per-student results.
+      }
+
+      startBtn.disabled = false;
+      resetBtn.disabled = false;
+    }
+
+    // Reset UI to initial state
+    function resetUI() {
+      resultsDiv.innerHTML = "<div class='log'>Ready. Click Start Processing.</div>";
+    }
+
+    // Wire up buttons
+    startBtn.addEventListener("click", () => processAllStudents());
+    resetBtn.addEventListener("click", resetUI);
+
+    // Auto-show the students object for convenience in console (optional)
+    window.students = students;
+
+    // Initialize UI
+    resetUI();
+  </script>
+</body>
+</html>
