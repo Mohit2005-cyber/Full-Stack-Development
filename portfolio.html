@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
   <title>Mohit Sharma | Web Developer</title>
   <meta name="description" content="Mohit Sharma | Web Developer portfolio showcasing HTML, CSS, and JavaScript projects.">
   <meta name="keywords" content="Web Developer, HTML, CSS, JavaScript, Portfolio, Mohit Sharma">
@@ -11,6 +12,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
+=======
+  <title>My Portfolio</title>
+  <link rel="icon" type="image/x-icon" href="icon.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+  <style>
+   
+>>>>>>> bd10e976f03dfc5e0f70d92dc4f2b5210e574fe5
     * {
       margin: 0;
       padding: 0;
@@ -23,6 +32,7 @@
       background: #f9f9f9;
       color: #333;
       scroll-behavior: smooth;
+<<<<<<< HEAD
       opacity: 0;
       transition: opacity 1s ease;
     }
@@ -31,12 +41,20 @@
     /* Header */
     header {
       background: rgba(111, 0, 255, 0.95);
+=======
+    }
+
+    
+    header {
+      background: linear-gradient(90deg, #6f00ff, #a855f7);
+>>>>>>> bd10e976f03dfc5e0f70d92dc4f2b5210e574fe5
       position: fixed;
       width: 100%;
       top: 0;
       z-index: 999;
       padding: 15px 0;
       box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+<<<<<<< HEAD
       backdrop-filter: blur(5px);
     }
 
@@ -60,6 +78,14 @@
     nav ul {
       list-style: none;
       display: flex;
+=======
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+>>>>>>> bd10e976f03dfc5e0f70d92dc4f2b5210e574fe5
       gap: 2rem;
     }
 
@@ -67,6 +93,7 @@
       color: white;
       text-decoration: none;
       font-weight: 500;
+<<<<<<< HEAD
       position: relative;
       transition: color 0.3s ease;
     }
@@ -99,12 +126,23 @@
     }
 
     /* Sections */
+=======
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #ffeb3b;
+    }
+
+    
+>>>>>>> bd10e976f03dfc5e0f70d92dc4f2b5210e574fe5
     section {
       padding: 100px 20px;
       text-align: center;
       min-height: 100vh;
     }
 
+<<<<<<< HEAD
     section h2 {
       font-size: 2.2rem;
       color: #6f00ff;
@@ -127,11 +165,16 @@
     /* Home Section */
     #home {
       background: linear-gradient(135deg, #6f00ff, #9b5de5);
+=======
+    #home {
+      background: linear-gradient(135deg, #6f00ff, #c084fc);
+>>>>>>> bd10e976f03dfc5e0f70d92dc4f2b5210e574fe5
       color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+<<<<<<< HEAD
       position: relative;
       overflow: hidden;
     }
@@ -221,10 +264,25 @@
     }
 
     /* About Section */
+=======
+    }
+
+    #home h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    #home p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+>>>>>>> bd10e976f03dfc5e0f70d92dc4f2b5210e574fe5
     #about {
       background: #e0f7fa;
       border-radius: 12px;
       max-width: 1000px;
+<<<<<<< HEAD
       margin: 50px auto;
       padding: 60px 40px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -405,17 +463,91 @@
     @media (max-width: 480px) {
       #home h1 { font-size: 2rem; }
       .profile-img { width: 150px; height: 150px; }
+=======
+      margin: auto;
+    }
+
+    #projects {
+      background: #fce4ec;
+    }
+
+    #contact {
+      background: #ede7f6;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #444;
+    }
+
+    
+    .project-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: auto;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-align: left;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      color: #6f00ff;
+    }
+
+    
+    #contact p {
+      font-size: 1.1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #6f00ff;
+      color: white;
+      margin-top: 30px;
+    }
+
+   
+    @media (max-width: 768px) {
+      #home h1 {
+        font-size: 2.2rem;
+      }
+>>>>>>> bd10e976f03dfc5e0f70d92dc4f2b5210e574fe5
     }
   </style>
 </head>
 <body>
 
+<<<<<<< HEAD
   <header>
     <nav>
       <div class="logo">M<span>S</span></div>
       <div class="menu-toggle"><i class="fas fa-bars"></i></div>
       <ul>
         <li><a href="#home" class="active">Home</a></li>
+=======
+  
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+>>>>>>> bd10e976f03dfc5e0f70d92dc4f2b5210e574fe5
         <li><a href="#about">About Me</a></li>
         <li><a href="#projects">My Projects</a></li>
         <li><a href="#contact">Contact Me</a></li>
@@ -423,6 +555,7 @@
     </nav>
   </header>
 
+<<<<<<< HEAD
   <section id="home">
     <div class="profile-container">
       <img src="assets/PHOTO.jpg" alt="Mohit Sharma" class="profile-img">
@@ -642,6 +775,49 @@
       });
     });
 </script>
+=======
+
+  <section id="home">
+    <h1>Welcome to My Portfolio</h1>
+    <p>Hello! I'm Mohit Sharma, a beginner web developer excited to share my work.</p>
+  </section>
+
+  
+  <section id="about">
+    <h2>About Me</h2>
+    <p>Hi, I'm Mohit Sharma. I'm learning HTML, CSS, and JavaScript to build better websites.  
+       I enjoy creating clean, responsive designs and improving my coding skills every day.</p>
+  </section>
+
+  <section id="projects">
+    <h2>My Projects</h2>
+     <div class="project-list">
+      <div class="card">
+       <h3>Project 1</h3>
+        <p>A simple webpage design demonstrating HTML & CSS basics.</p>
+      </div>
+      <div class="card">
+        <h3>Project 2</h3>
+        <p>Interactive form validation using JavaScript.</p>
+      </div>
+      <div class="card">
+        <h3>Project 3</h3>
+        <p>Personal portfolio website showcasing my skills and projects.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <p>📧 Email: mohitsharma@gmail.com</p>
+    <p>🔗 LinkedIn: linkedin.com/in/mohitsharma</p>
+  </section>
+
+
+  <footer>
+    <p>© 2025 Mohit Sharma | Designed with ❤️</p>
+  </footer>
+>>>>>>> bd10e976f03dfc5e0f70d92dc4f2b5210e574fe5
 
 </body>
 </html>
